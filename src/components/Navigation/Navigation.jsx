@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, BrowserRouter as Router } from 'react-router-dom';
 import { Navbar, Nav, Button, Modal } from 'react-bootstrap';
 import logo from '../../assets/logo.svg';
-import { fetchApi } from '../../api/fetchApi';
+import { login } from '../../actions/auth';
 import { useWindowWidthAndHeight } from '../../hooks/responsiveHook';
+import { useForm } from "react-hook-form";
 
 import LoginForm from '../LoginForm/LoginForm';
 
@@ -15,6 +17,25 @@ const Navigation = () => {
 
     const handleShow = () => setShowModal(true);
     const handleClose = () => setShowModal(false);
+
+    const { register, handleSubmit, clearErrors, formState: { errors } } = useForm();
+
+    const { isLoggedIn } = useSelector(state => state.auth);
+    const { message } = useSelector(state => state.message);
+    const dispatch = useDispatch();
+
+    const logIn = (data, e) => {
+        e.preventDefault();
+        console.log(e);
+        console.log(data.login)
+        dispatch(login(data.login))
+            .then((res) => {
+                console.log(res);
+                console.log(isLoggedIn)
+            })
+            .catch(() => console.log('Bład, funkcja nie działa'));
+        // handleClose();
+    };
 
 
     return (
@@ -50,13 +71,15 @@ const Navigation = () => {
                 <Modal.Header closeButton>
                     <Modal.Title>Login</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
-                    <LoginForm />
-                </Modal.Body>
-                <Modal.Footer>
-                    <NavLink to="/register" onClick={handleClose}>No account? Register now!</NavLink>
-                    <Button variat="primary" onClick={handleClose}>Login</Button>
-                </Modal.Footer>
+                <form onSubmit={handleSubmit(logIn)}>
+                    <Modal.Body>
+                        <LoginForm register={register} errors={errors} />
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <NavLink to="/register" onClick={handleClose}>No account? Register now!</NavLink>
+                        <Button variat="primary" type="submit">Login</Button>
+                    </Modal.Footer>
+                </form>
             </Modal>
         </>
     )

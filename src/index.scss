@@ -1,0 +1,19 @@
+html {
+  font-size: 16px;
+}
+
+body {
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  height: 100%;
+  // background-image: url('./assets/images/background.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+strong {
+  font-weight: 700;
+}

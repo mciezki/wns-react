@@ -4,7 +4,8 @@ import {
   NotFoundPage,
   HomePage,
   LoginPage,
-  RegisterPage
+  RegisterPage,
+  TestPage
 } from './pages';
 import { routes } from './helpers';
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -20,6 +21,7 @@ const App = () => {
           <Route exact path={routes.home} component={HomePage} />
           <Route exact path={routes.login} component={LoginPage} />
           <Route exact path={routes.register} component={RegisterPage} />
+          <Route exact path={routes.test} component={TestPage} />
           <Route component={NotFoundPage} />
         </Switch>
       </Router>

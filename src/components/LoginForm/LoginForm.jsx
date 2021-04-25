@@ -1,17 +1,31 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { fetchApi } from '../../api/fetchApi';
+import Input from '../Inputs/Input';
 
 import './LoginForm.scss';
 
-const LoginForm = () => {
+const LoginForm = ({ register, errors }) => {
     return (
         <>
-            <label>Login</label>
-            <input type="text" />
-            <br />
-            <label htmlFor="">Hasło</label>
-            <input type="password" />
+            <Input
+                label="Nazwa użytkownika"
+                type="text"
+                placeholder=""
+                name="login.username"
+                register={register}
+                require={true}
+                errors={errors && errors.login?.username ? errors.login.username : null}
+                message="Wprowadź poprawną nazwę użytkownika"
+            />
+            <Input
+                label="Hasło"
+                type="password"
+                placeholder=""
+                name="login.password"
+                register={register}
+                require={true}
+                errors={errors && errors.login?.password ? errors.login.password : null}
+                message="Wprowadż właściwe hasło"
+            />
         </>
     )
 }
