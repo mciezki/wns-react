@@ -1,9 +1,13 @@
 import React from 'react';
 import { fetchApi } from '../api/fetchApi';
+import Slider from '../components/Slider/Slider';
 
 const HomePage = () => {
     return (
-        <h1>Home Page</h1>
+        <>
+            <Slider />
+            <h1>Home Page</h1>
+        </>
     )
 }
 

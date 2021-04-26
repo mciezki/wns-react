@@ -7,24 +7,24 @@ const LoginForm = ({ register, errors }) => {
     return (
         <>
             <Input
-                label="Nazwa użytkownika"
+                label="Username"
                 type="text"
                 placeholder=""
                 name="login.username"
                 register={register}
                 require={true}
                 errors={errors && errors.login?.username ? errors.login.username : null}
-                message="Wprowadź poprawną nazwę użytkownika"
+                message="Incorrect username"
             />
             <Input
-                label="Hasło"
+                label="Password"
                 type="password"
                 placeholder=""
                 name="login.password"
                 register={register}
                 require={true}
                 errors={errors && errors.login?.password ? errors.login.password : null}
-                message="Wprowadż właściwe hasło"
+                message="Incorrect password"
             />
         </>
     )
