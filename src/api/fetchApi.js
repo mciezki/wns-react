@@ -3,8 +3,8 @@ import { API_URL } from '../config';
 
 
 export const fetchApi = async (path, params) => {
-    params.header = {};
-    params.header['Content-Type'] = 'application/json';
+    params.headers = {};
+    params.headers['Content-Type'] = 'application/json';
 
     if (typeof params.body === 'object') {
         params.body = JSON.stringify(params.body);

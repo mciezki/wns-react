@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, BrowserRouter as Router } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { Navbar, Nav, Button, Modal } from 'react-bootstrap';
 import logo from '../../assets/logo.svg';
 import { login } from '../../actions/auth';
@@ -12,6 +12,8 @@ import LoginForm from '../LoginForm/LoginForm';
 import './Navigation.scss';
 
 const Navigation = () => {
+    const history = useHistory();
+
     const [show, setShowModal] = useState(false);
     const [width, height] = useWindowWidthAndHeight();
 
@@ -60,10 +62,20 @@ const Navigation = () => {
                         <NavLink to="/articles">Articles</NavLink>
                     </Nav>
                     {width > 992 ?
-                        <Button variant="primary" onClick={handleShow}>
-                            Login
+                        <>
+                            <Button variant="primary" onClick={() => history.push('/register')}>
+                                Register
                         </Button>
-                        : <a onClick={handleShow}>Login</a>}
+                            <Button variant="primary" onClick={handleShow}>
+                                Login
+                        </Button>
+                        </>
+                        :
+                        <>
+                            <NavLink to="/register">Register</NavLink>
+                            <a onClick={handleShow}>Login</a>
+                        </>
+                    }
                 </Navbar.Collapse>
             </Navbar>
 
@@ -73,7 +85,7 @@ const Navigation = () => {
                 </Modal.Header>
                 <form onSubmit={handleSubmit(logIn)}>
                     <Modal.Body>
-                        <LoginForm register={register} errors={errors} />
+                        <LoginForm register={register} errors={errors} clear={clearErrors} />
                     </Modal.Body>
                     <Modal.Footer>
                         <NavLink to="/register" onClick={handleClose}>No account? Register now!</NavLink>

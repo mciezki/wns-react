@@ -3,7 +3,7 @@ import Input from '../Inputs/Input';
 
 import './LoginForm.scss';
 
-const LoginForm = ({ register, errors }) => {
+const LoginForm = ({ register, errors, clear }) => {
     return (
         <>
             <Input
@@ -15,6 +15,7 @@ const LoginForm = ({ register, errors }) => {
                 require={true}
                 errors={errors && errors.login?.username ? errors.login.username : null}
                 message="Incorrect username"
+                clear={clear}
             />
             <Input
                 label="Password"
@@ -25,6 +26,7 @@ const LoginForm = ({ register, errors }) => {
                 require={true}
                 errors={errors && errors.login?.password ? errors.login.password : null}
                 message="Incorrect password"
+                clear={clear}
             />
         </>
     )

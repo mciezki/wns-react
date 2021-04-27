@@ -9,7 +9,7 @@ import {
 import { fetchApi } from '../api/fetchApi';
 
 
-export const register = (data) => (dispatch) => {
+export const registration = (data) => (dispatch) => {
     const { username, email, password, firstName, surname } = data;
     return fetchApi('/api/auth/signup', {
         method: "POST",
@@ -21,18 +21,18 @@ export const register = (data) => (dispatch) => {
             surname
         }
     }).then(response => {
+        console.log(response)
         dispatch({
             type: REGISTER_SUCCESS
         });
 
         dispatch({
             type: SET_MESSAGE,
-            payload: response.data.message
+            payload: response.message
         });
     })
         .catch(error => {
             const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-
             dispatch({ type: REGISTER_FAIL });
             dispatch({
                 type: SET_MESSAGE,
@@ -57,8 +57,8 @@ export const login = (data) => (dispatch) => {
         }
     }).then(response => {
         console.log(response)
-        if (response.data.accessToken) {
-            localStorage.setItem("user", JSON.stringify(response.data))
+        if (response.accessToken) {
+            localStorage.setItem("user", JSON.stringify(response))
         }
     }).then(data => {
         dispatch({

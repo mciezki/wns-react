@@ -11,6 +11,10 @@
         text-align: left;
         margin-bottom: 3px;
         margin-left: 2px;
+
+        .require {
+            color: red;
+        }
     }
 
     input {
@@ -28,9 +32,10 @@
         }
     }
 
-    span {
+    .error-message {
         display: block;
         margin-top: 1.5px;
+        margin-left: 5px;
         color: red;
         font-size: 10px;
         letter-spacing: 1px;

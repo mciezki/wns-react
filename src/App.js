@@ -6,15 +6,17 @@ import {
   RegisterPage,
   TestPage
 } from './pages';
-import { routes } from './helpers';
+import { routes, history } from './helpers';
 import "bootstrap/dist/css/bootstrap.min.css";
+
+import Footer from './components/Footer/Footer';
 
 import Navigation from './components/Navigation/Navigation';
 
 const App = () => {
   return (
     <div className="App">
-      <Router>
+      <Router history={history}>
         <Navigation />
         <Switch>
           <Route exact path={routes.home} component={HomePage} />
@@ -22,6 +24,7 @@ const App = () => {
           <Route exact path={routes.test} component={TestPage} />
           <Route component={NotFoundPage} />
         </Switch>
+        <Footer />
       </Router>
     </div>
   );

@@ -14,6 +14,7 @@ header {
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
+        border-bottom: 2px solid rgb(52, 58, 64);
         transition: 1s;
 
         .header-text-container {
@@ -22,8 +23,8 @@ header {
             right: 0;
             background-color: rgba(52, 58, 64, 0.479);
             width: 500px;
-            height: 100%;
-            color: #D8FCFF;
+            height: 101%;
+            color: #fff;
             transition: 0.5s;
 
             @media (max-width: 415px) {
