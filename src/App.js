@@ -1,5 +1,6 @@
 import './App.css';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import {
   NotFoundPage,
   HomePage,
@@ -14,14 +15,16 @@ import Footer from './components/Footer/Footer';
 import Navigation from './components/Navigation/Navigation';
 
 const App = () => {
+  const { user } = useSelector(state => state.auth);
+
   return (
     <div className="App">
       <Router history={history}>
         <Navigation />
         <Switch>
           <Route exact path={routes.home} component={HomePage} />
-          <Route exact path={routes.register} component={RegisterPage} />
           <Route exact path={routes.test} component={TestPage} />
+          {!user ? <Route exact path={routes.register} component={RegisterPage} /> : null}
           <Route component={NotFoundPage} />
         </Switch>
         <Footer />

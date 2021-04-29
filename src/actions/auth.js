@@ -42,8 +42,11 @@ export const registration = (data) => (dispatch) => {
 };
 
 
-export const logout = () => {
+export const logout = () => (dispatch) => {
     localStorage.removeItem("user");
+    dispatch({
+        type: LOGOUT
+    })
 };
 
 

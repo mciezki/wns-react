@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useHistory } from 'react-router-dom';
-import { Navbar, Nav, Button, Modal } from 'react-bootstrap';
+import { Navbar, Nav, Button, Modal, Alert } from 'react-bootstrap';
 import logo from '../../assets/logo.svg';
-import { login } from '../../actions/auth';
+import { login, logout } from '../../actions/auth';
 import { useWindowWidthAndHeight } from '../../hooks/responsiveHook';
 import { useForm } from "react-hook-form";
+import {
+    CLEAR_MESSAGE
+} from '../../actions/types';
 
 import LoginForm from '../LoginForm/LoginForm';
 
@@ -26,9 +29,18 @@ const Navigation = () => {
     const { message } = useSelector(state => state.message);
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        if (isLoggedIn)
+            setTimeout(() => {
+                dispatch({
+                    type: CLEAR_MESSAGE,
+                });
+                handleClose();
+            }, 1500);
+    }, [isLoggedIn])
+
     const logIn = (data, e) => {
         e.preventDefault();
-        console.log(e);
         console.log(data.login)
         dispatch(login(data.login))
             .then((res) => {
@@ -36,7 +48,12 @@ const Navigation = () => {
                 console.log(isLoggedIn)
             })
             .catch(() => console.log('Bład, funkcja nie działa'));
-        // handleClose();
+    };
+
+    const logOut = (e) => {
+        e.preventDefault();
+        dispatch(logout());
+        history.push('/');
     };
 
 
@@ -61,20 +78,36 @@ const Navigation = () => {
                         <NavLink to="/">Home</NavLink>
                         <NavLink to="/articles">Articles</NavLink>
                     </Nav>
-                    {width > 992 ?
-                        <>
-                            <Button variant="primary" onClick={() => history.push('/register')}>
-                                Register
+                    {!isLoggedIn ?
+                        width > 992 ?
+                            <>
+                                <Button variant="primary" onClick={() => history.push('/register')}>
+                                    Register
                         </Button>
-                            <Button variant="primary" onClick={handleShow}>
-                                Login
+                                <Button variant="primary" onClick={handleShow}>
+                                    Login
                         </Button>
-                        </>
+                            </>
+                            :
+                            <>
+                                <NavLink to="/register">Register</NavLink>
+                                <a onClick={handleShow}>Login</a>
+                            </>
                         :
-                        <>
-                            <NavLink to="/register">Register</NavLink>
-                            <a onClick={handleShow}>Login</a>
-                        </>
+                        width > 992 ?
+                            <>
+                                <Button variant="primary" onClick={() => history.push('/')}>
+                                    Profile
+                        </Button>
+                                <Button variant="primary" onClick={logOut}>
+                                    Logout
+                        </Button>
+                            </>
+                            :
+                            <>
+                                <NavLink to="/">Profile</NavLink>
+                                <a onClick={logOut}>Logout</a>
+                            </>
                     }
                 </Navbar.Collapse>
             </Navbar>
@@ -85,6 +118,16 @@ const Navigation = () => {
                 </Modal.Header>
                 <form onSubmit={handleSubmit(logIn)}>
                     <Modal.Body>
+                        {message ?
+                            <Alert variant='danger'>
+                                {message}
+                            </Alert>
+                            : isLoggedIn ?
+                                <Alert variant='success'>
+                                    You logged successfully!
+                                </Alert>
+                                : null
+                        }
                         <LoginForm register={register} errors={errors} clear={clearErrors} />
                     </Modal.Body>
                     <Modal.Footer>
