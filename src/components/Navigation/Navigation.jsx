@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useHistory } from 'react-router-dom';
-import { Navbar, Nav, Button, Modal, Alert } from 'react-bootstrap';
+import { Navbar, Nav, Button, Modal, Alert, Dropdown, DropdownButton } from 'react-bootstrap';
 import logo from '../../assets/logo.svg';
 import { login, logout } from '../../actions/auth';
 import { useWindowWidthAndHeight } from '../../hooks/responsiveHook';
@@ -17,6 +17,8 @@ import './Navigation.scss';
 const Navigation = () => {
     const history = useHistory();
 
+    const [nick, setNick] = useState('');
+    const [profile, setProfile] = useState('');
     const [show, setShowModal] = useState(false);
     const [width, height] = useWindowWidthAndHeight();
 
@@ -26,18 +28,29 @@ const Navigation = () => {
     const { register, handleSubmit, clearErrors, formState: { errors } } = useForm();
 
     const { isLoggedIn } = useSelector(state => state.auth);
+    const { user } = useSelector(state => state.auth);
     const { message } = useSelector(state => state.message);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (isLoggedIn)
+        if (isLoggedIn) {
             setTimeout(() => {
                 dispatch({
                     type: CLEAR_MESSAGE,
                 });
                 handleClose();
+                history.push('/');
             }, 1500);
+        }
     }, [isLoggedIn])
+
+    useEffect(() => {
+        if (user) {
+            setNick(user.username);
+            setProfile(user.id);
+        }
+    }, [user])
+
 
     const logIn = (data, e) => {
         e.preventDefault();
@@ -45,7 +58,7 @@ const Navigation = () => {
         dispatch(login(data.login))
             .then((res) => {
                 console.log(res);
-                console.log(isLoggedIn)
+                console.log(isLoggedIn);
             })
             .catch(() => console.log('Bład, funkcja nie działa'));
     };
@@ -75,8 +88,8 @@ const Navigation = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                        <NavLink to="/">Home</NavLink>
-                        <NavLink to="/articles">Articles</NavLink>
+                        <NavLink className="basic-nav" to="/">Home</NavLink>
+                        <NavLink className="basic-nav" to="/articles">Articles</NavLink>
                     </Nav>
                     {!isLoggedIn ?
                         width > 992 ?
@@ -90,23 +103,23 @@ const Navigation = () => {
                             </>
                             :
                             <>
-                                <NavLink to="/register">Register</NavLink>
-                                <a onClick={handleShow}>Login</a>
+                                <NavLink className="nav-item" to="/register">Register</NavLink>
+                                <a className="nav-item" onClick={handleShow}>Login</a>
                             </>
                         :
                         width > 992 ?
-                            <>
-                                <Button variant="primary" onClick={() => history.push('/')}>
-                                    Profile
-                        </Button>
-                                <Button variant="primary" onClick={logOut}>
-                                    Logout
-                        </Button>
-                            </>
+                            <DropdownButton menuAlign="right" variant="primary" id="dropdown-menu-align-right" title={user ? user.username : nick}>
+                                <Dropdown.Header>Your world</Dropdown.Header>
+                                <Dropdown.Item onClick={() => history.push(`/profile/${user ? user.id : profile}`)}>Profile</Dropdown.Item>
+                                <Dropdown.Item onClick={() => history.push('/article/add')}>Add Article</Dropdown.Item>
+                                <Dropdown.Divider />
+                                <Dropdown.Item onClick={logOut}>Logout</Dropdown.Item>
+                            </DropdownButton>
                             :
                             <>
-                                <NavLink to="/">Profile</NavLink>
-                                <a onClick={logOut}>Logout</a>
+                                <NavLink className="nav-item" to={`/profile/${user ? user.id : profile}`}>Profile</NavLink>
+                                <NavLink className="nav-item" to='/article/add'>Add Article</NavLink>
+                                <a className="nav-item" onClick={logOut}>Logout</a>
                             </>
                     }
                 </Navbar.Collapse>
@@ -131,7 +144,7 @@ const Navigation = () => {
                         <LoginForm register={register} errors={errors} clear={clearErrors} />
                     </Modal.Body>
                     <Modal.Footer>
-                        <NavLink to="/register" onClick={handleClose}>No account? Register now!</NavLink>
+                        <NavLink className="register-link" to="/register" onClick={handleClose}>No account? Register now!</NavLink>
                         <Button variat="primary" type="submit">Login</Button>
                     </Modal.Footer>
                 </form>
