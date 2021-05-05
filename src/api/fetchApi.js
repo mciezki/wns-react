@@ -1,10 +1,13 @@
 import { API_URL } from '../config';
 
 
-
-export const fetchApi = async (path, params) => {
+export const fetchApi = async (path, params, token) => {
     params.headers = {};
     params.headers['Content-Type'] = 'application/json';
+
+    if (token) {
+        params.headers['x-access-token'] = token;
+    }
 
     if (typeof params.body === 'object') {
         params.body = JSON.stringify(params.body);

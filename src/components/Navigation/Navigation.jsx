@@ -17,8 +17,6 @@ import './Navigation.scss';
 const Navigation = () => {
     const history = useHistory();
 
-    const [nick, setNick] = useState('');
-    const [profile, setProfile] = useState('');
     const [show, setShowModal] = useState(false);
     const [width, height] = useWindowWidthAndHeight();
 
@@ -44,22 +42,11 @@ const Navigation = () => {
         }
     }, [isLoggedIn])
 
-    useEffect(() => {
-        if (user) {
-            setNick(user.username);
-            setProfile(user.id);
-        }
-    }, [user])
-
 
     const logIn = (data, e) => {
         e.preventDefault();
         console.log(data.login)
         dispatch(login(data.login))
-            .then((res) => {
-                console.log(res);
-                console.log(isLoggedIn);
-            })
             .catch(() => console.log('Bład, funkcja nie działa'));
     };
 
@@ -88,38 +75,38 @@ const Navigation = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                        <NavLink className="basic-nav" to="/">Home</NavLink>
-                        <NavLink className="basic-nav" to="/articles">Articles</NavLink>
+                        <NavLink className="basic-nav" exact to="/">Home</NavLink>
+                        <NavLink className="basic-nav" exact to="/articles">Articles</NavLink>
                     </Nav>
-                    {!isLoggedIn ?
+                    {user ?
                         width > 992 ?
-                            <>
-                                <Button variant="primary" onClick={() => history.push('/register')}>
-                                    Register
-                        </Button>
-                                <Button variant="primary" onClick={handleShow}>
-                                    Login
-                        </Button>
-                            </>
-                            :
-                            <>
-                                <NavLink className="nav-item" to="/register">Register</NavLink>
-                                <a className="nav-item" onClick={handleShow}>Login</a>
-                            </>
-                        :
-                        width > 992 ?
-                            <DropdownButton menuAlign="right" variant="primary" id="dropdown-menu-align-right" title={user ? user.username : nick}>
+                            <DropdownButton menuAlign="right" variant="primary" id="dropdown-menu-align-right" title={user.username}>
                                 <Dropdown.Header>Your world</Dropdown.Header>
-                                <Dropdown.Item onClick={() => history.push(`/profile/${user ? user.id : profile}`)}>Profile</Dropdown.Item>
-                                <Dropdown.Item onClick={() => history.push('/article/add')}>Add Article</Dropdown.Item>
+                                <Dropdown.Item onClick={() => history.push(`/profile/${user.id}`)}>Profile</Dropdown.Item>
+                                <Dropdown.Item onClick={() => history.push('/articles/add')}>Add Article</Dropdown.Item>
                                 <Dropdown.Divider />
                                 <Dropdown.Item onClick={logOut}>Logout</Dropdown.Item>
                             </DropdownButton>
                             :
                             <>
-                                <NavLink className="nav-item" to={`/profile/${user ? user.id : profile}`}>Profile</NavLink>
+                                <NavLink className="nav-item" to={`/profile/${user.id}`}>Profile</NavLink>
                                 <NavLink className="nav-item" to='/article/add'>Add Article</NavLink>
                                 <a className="nav-item" onClick={logOut}>Logout</a>
+                            </>
+                        :
+                        width > 992 ?
+                            <>
+                                <Button variant="primary" onClick={() => history.push('/register')}>
+                                    Register
+                                </Button>
+                                <Button variant="primary" onClick={handleShow}>
+                                    Login
+                                </Button>
+                            </>
+                            :
+                            <>
+                                <NavLink className="nav-item" to="/register">Register</NavLink>
+                                <a className="nav-item" onClick={handleShow}>Login</a>
                             </>
                     }
                 </Navbar.Collapse>

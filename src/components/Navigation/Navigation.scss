@@ -5,10 +5,22 @@ a {
     cursor: pointer;
     transition: 0.5s;
 
-    &.basic-nav:hover {
-        @media (max-width: 995px) {
-            color: #ddd;
-            background-color: #444;
+    &.basic-nav {
+        &:hover {
+            color: #ccc;
+            text-shadow: 2px 2px 4px #000000;
+            text-decoration: none;
+
+            @media (max-width: 995px) {
+                color: #ccc;
+                background-color: #444;
+                text-decoration: none;
+            }
+        }
+
+        &.active {
+            color: #ccc;
+            text-shadow: 2px 2px 4px #000000;
             text-decoration: none;
         }
     }
@@ -23,7 +35,7 @@ a {
     }
 
     &.nav-item:hover {
-        color: #ddd;
+        color: #ccc;
         background-color: #444;
         text-decoration: none;
     }

@@ -1,0 +1,118 @@
+.add-content {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    min-height: 100%;
+
+    .rotate-square {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 120vh;
+        width: 120vh;
+        background-color: #DB5707;
+        transform-origin: center;
+        transform: rotate(45deg) translateX(-90%);
+        z-index: 10;
+    }
+
+    .stripe {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        height: 120vh;
+        width: 120vh;
+        background-color: #0069D9;
+        transform-origin: center;
+        transform: rotate(45deg) translateX(90%);
+        z-index: 10;
+    }
+
+    .add-panel {
+        position: relative;
+        width: 70%;
+        padding: 2.4rem 12rem 2.4rem;
+        margin: 50px auto 50px;
+        background: #fff;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.12);
+        border-radius: 12px;
+        z-index: 11;
+
+        @media (max-width: 1250px) {
+            padding: 2.4rem 8rem;
+        }
+
+        @media (max-width: 1000px) {
+            padding: 2.4rem 4rem;
+        }
+
+        @media (max-width: 650px) {
+            width: 80%;
+            padding: 2.4rem 2rem;
+        }
+
+        .add-header {
+            text-align: left;
+            padding-bottom: 5px;
+            border-bottom: .5px solid #ddd;
+        }
+
+        .description {
+            text-align: left;
+            font-size: 14px;
+            margin-bottom: 30px;
+            letter-spacing: .5px;
+        }
+
+        .head-add {
+            display: inline-block;
+            width: 50%;
+
+            @media (max-width: 600px) {
+                width: 100%;
+            }
+
+
+            .title-area {
+                height: calc(1.5em + .75rem + 2px);
+                border: 1px solid #ced4da;
+                border-radius: .25rem;
+                text-align: left;
+
+                &:focus {
+                    border-color: #ddd;
+                    background-color: #eee;
+                }
+            }
+        }
+
+        .text-add {
+            width: 100%;
+
+            .text-area {
+                width: 100%;
+                resize: none;
+                height: 300px;
+                border: 1px solid #ced4da;
+                border-radius: .25rem;
+                transition: 1s;
+
+                &:focus {
+                    outline: none;
+                    border: 2px solid #ddd;
+                    background-color: #fff;
+                }
+            }
+        }
+
+        button {
+            display: block;
+            margin: 15px 5px 0 auto;
+
+            @media (max-width: 995px) {
+                margin: 15px auto 0 auto;
+            }
+        }
+
+    }
+}

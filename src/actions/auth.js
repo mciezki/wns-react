@@ -63,10 +63,9 @@ export const login = (data) => (dispatch) => {
         if (response.accessToken) {
             localStorage.setItem("user", JSON.stringify(response))
         }
-    }).then(data => {
         dispatch({
             type: LOGIN_SUCCESS,
-            payload: { user: data },
+            payload: response,
         });
     })
         .catch(error => {
