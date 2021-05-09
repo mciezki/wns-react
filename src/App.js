@@ -6,7 +6,8 @@ import {
   HomePage,
   RegisterPage,
   TestPage,
-  AddArticlePage
+  AddArticlePage,
+  ArticlesPage
 } from './pages';
 import { routes, history } from './helpers';
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -26,7 +27,7 @@ const App = () => {
           <Route exact path={routes.home} component={HomePage} />
           <Route exact path={routes.test} component={TestPage} />
           {!user ? <Route exact path={routes.register} component={RegisterPage} /> : null}
-          <Route exact path={routes.article.self} render={() => <h1>Articles list</h1>} />
+          <Route exact path={routes.article.self} component={ArticlesPage} />
           {user ? <Route path={routes.article.addArticle} component={AddArticlePage} /> : null}
           <Route component={NotFoundPage} />
         </Switch>
