@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { Button, Alert } from 'react-bootstrap';
@@ -15,7 +15,10 @@ import Input from '../../components/Inputs/Input';
 const AddArticlePage = () => {
     const { register, handleSubmit, clearErrors, formState: { errors } } = useForm();
 
+    const [baseImage, setBaseImage] = useState('');
     const [inputReset, setInputReset] = useState(true);
+
+    const hiddenFileInput = useRef(null);
 
     const dispatch = useDispatch();
     const { message } = useSelector(state => state.message);
@@ -29,6 +32,26 @@ const AddArticlePage = () => {
     }, []);
 
 
+    const handleReaderLoaded = (readerEvt) => {
+        let binaryString = readerEvt.target.result;
+        setBaseImage(btoa(binaryString));
+    }
+
+    const convertImage = (e) => {
+        let file = e.target.files[0]
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = handleReaderLoaded.bind(this);
+            reader.readAsBinaryString(file)
+        }
+    };
+
+
+    const uploadClick = (e) => {
+        hiddenFileInput.current.click();
+    }
+
     const onSubmit = async (data) => {
         console.log(data.article)
         await fetchApi('/article/add', {
@@ -37,7 +60,8 @@ const AddArticlePage = () => {
                 title: data.article.title,
                 text: data.article.text,
                 category: data.article.category,
-                user: auth.user.username
+                user: auth.user.username,
+                picture: baseImage ? `data:image/png;base64,${baseImage}` : ''
             }
         }, auth.user.accessToken)
             .then(response => {
@@ -47,7 +71,10 @@ const AddArticlePage = () => {
                     payload: response.message
                 });
             })
-            .then(() => setInputReset(prevState => !prevState))
+            .then(() => {
+                setInputReset(prevState => !prevState)
+                setBaseImage('');
+            })
             .catch(error => {
                 const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
                 dispatch({
@@ -112,6 +139,16 @@ const AddArticlePage = () => {
                         className="text-area"
                         containerClass="text-add"
                         inputReset={inputReset}
+                    />
+                    <Button variant={baseImage ? "success" : "warning"} className="upload-photo" onClick={uploadClick}>Upload a photo</Button>
+                    <input
+                        type="file"
+                        id="file"
+                        name="file"
+                        accept=".jpeg, .png, .jpg"
+                        style={{ display: 'none' }}
+                        ref={hiddenFileInput}
+                        onChange={(e) => convertImage(e)}
                     />
                     <Button type='submit'>Post Article</Button>
                 </form>

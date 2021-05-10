@@ -6,6 +6,7 @@ import logo from '../../assets/logo.svg';
 import { login, logout } from '../../actions/auth';
 import { useWindowWidthAndHeight } from '../../hooks/responsiveHook';
 import { useForm } from "react-hook-form";
+import useScroll from '@react-hooks-custom/use-scroll';
 import {
     CLEAR_MESSAGE
 } from '../../actions/types';
@@ -16,6 +17,8 @@ import './Navigation.scss';
 
 const Navigation = () => {
     const history = useHistory();
+
+    const { scrollX, scrollY } = useScroll();
 
     const [show, setShowModal] = useState(false);
     const [width, height] = useWindowWidthAndHeight();
@@ -56,10 +59,16 @@ const Navigation = () => {
         history.push('/');
     };
 
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+    }
 
     return (
         <>
-            <Navbar bg='dark' expand='lg' variant='dark'>
+            <Navbar bg='dark' expand='lg' variant='dark' className={width > 995 && scrollY > 130 ? 'movement-nav' : ''}>
                 <NavLink to="/">
                     <Navbar.Brand>
                         <img
@@ -75,8 +84,8 @@ const Navigation = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                        <NavLink className="basic-nav" exact to="/">Home</NavLink>
-                        <NavLink className="basic-nav" exact to="/articles">Articles</NavLink>
+                        <NavLink className="basic-nav" exact to="/" onClick={() => scrollToTop()}>Home</NavLink>
+                        <NavLink className="basic-nav" exact to="/articles" onClick={() => scrollToTop()}>Articles</NavLink>
                     </Nav>
                     {user ?
                         width > 992 ?
@@ -90,7 +99,7 @@ const Navigation = () => {
                             :
                             <>
                                 <NavLink className="nav-item" to={`/profile/${user.id}`}>Profile</NavLink>
-                                <NavLink className="nav-item" to='/article/add'>Add Article</NavLink>
+                                <NavLink className="nav-item" to='/articles/add'>Add Article</NavLink>
                                 <a className="nav-item" onClick={logOut}>Logout</a>
                             </>
                         :
