@@ -68,7 +68,7 @@ const Navigation = () => {
 
     return (
         <>
-            <Navbar bg='dark' expand='lg' variant='dark' className={width > 995 && scrollY > 130 ? 'movement-nav' : ''}>
+            <Navbar bg='dark' expand='lg' variant='dark' className={width > 995 && scrollY > 100 ? 'movement-nav' : ''}>
                 <NavLink to="/">
                     <Navbar.Brand>
                         <img
@@ -92,14 +92,14 @@ const Navigation = () => {
                             <DropdownButton menuAlign="right" variant="primary" id="dropdown-menu-align-right" title={user.username}>
                                 <Dropdown.Header>Your world</Dropdown.Header>
                                 <Dropdown.Item onClick={() => history.push(`/profile/${user.id}`)}>Profile</Dropdown.Item>
-                                <Dropdown.Item onClick={() => history.push('/articles/add')}>Add Article</Dropdown.Item>
+                                <Dropdown.Item onClick={() => history.push('/add')}>Add Article</Dropdown.Item>
                                 <Dropdown.Divider />
                                 <Dropdown.Item onClick={logOut}>Logout</Dropdown.Item>
                             </DropdownButton>
                             :
                             <>
                                 <NavLink className="nav-item" to={`/profile/${user.id}`}>Profile</NavLink>
-                                <NavLink className="nav-item" to='/articles/add'>Add Article</NavLink>
+                                <NavLink className="nav-item" to='/add'>Add Article</NavLink>
                                 <a className="nav-item" onClick={logOut}>Logout</a>
                             </>
                         :

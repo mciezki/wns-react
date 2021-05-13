@@ -1,21 +1,4 @@
 .articles {
     width: 100%;
     overflow: hidden;
-
-    .pagination-interface {
-        margin: 0 auto 75px;
-        width: fit-content;
-
-        li {
-            margin: 0;
-
-            span {
-                pointer-events: none;
-            }
-
-            a {
-                margin: 0;
-            }
-        }
-    }
 }

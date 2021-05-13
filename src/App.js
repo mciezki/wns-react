@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, HashRouter, Switch, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
   NotFoundPage,
@@ -21,20 +21,20 @@ const App = () => {
 
   return (
     <div className="App">
-      <Router history={history}>
+      <HashRouter history={history}>
         <ScrollToTop />
         <Navigation />
         <Switch>
           <Route exact path={routes.home} component={HomePage} />
           <Route exact path={routes.test} component={TestPage} />
           {!user ? <Route exact path={routes.register} component={RegisterPage} /> : null}
-          <Route exact path={routes.article.self} component={ArticlesPage} />
-          <Route path={routes.article.oneArticle} component={ArticlesPage} />
-          {user ? <Route path={routes.article.addArticle} component={AddArticlePage} /> : null}
+          <Route path={routes.articles.self} component={ArticlesPage} />
+          <Route path={routes.article} component={TestPage} />
+          {user ? <Route exact path={routes.addArticle} component={AddArticlePage} /> : null}
           <Route component={NotFoundPage} />
         </Switch>
         <Footer />
-      </Router>
+      </HashRouter>
     </div>
   );
 }

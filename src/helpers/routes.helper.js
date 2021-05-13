@@ -4,9 +4,16 @@ export const routes = {
     home: '/',
     register: '/register',
     test: '/test',
-    article: include('/articles/', {
+    addArticle: '/add',
+    articles: include('/articles/', {
         self: '',
-        addArticle: 'add/',
-        oneArticle: ':uid/'
-    })
+        technology: 'technology/',
+        lifeStyle: 'life-style/',
+        games: 'games/',
+        health: 'health/',
+        politics: 'politics/',
+        tragedies: 'tragedies/',
+        fun: 'fun/'
+    }),
+    article: '/article/:uid'
 }
