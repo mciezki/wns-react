@@ -4,6 +4,7 @@ import { fetchApi } from '../../../api/fetchApi';
 
 import ArticleElement from '../../../components/Articles/ArticleElement/ArticleElement';
 import Paginator from '../../../components/Paginator/Paginator';
+import ArticlesLoading from '../ArticlesLoading/ArticlesLoading';
 
 import './ArticlesSubpage.scss';
 
@@ -50,7 +51,7 @@ const ArticlesSubpage = ({ category }) => {
                     {errorMessage}
                 </Alert>
             }
-            {articles !== null ?
+            {articles && articles.count !== 0 ?
                 articles.data.map((article) =>
                     <ArticleElement
                         key={article._id}
@@ -62,9 +63,9 @@ const ArticlesSubpage = ({ category }) => {
                         user={article.user}
                         _id={article._id}
                     />)
-                : 'Loading...'}
+                : <ArticlesLoading />}
             <div className="pagination-interface">
-                {articles !== null ?
+                {articles && articles.count !== 0 ?
                     <Paginator pages={pages} currentPage={currentPage} changeCurrentPage={changeCurrentPage} />
                     : null}
             </div>

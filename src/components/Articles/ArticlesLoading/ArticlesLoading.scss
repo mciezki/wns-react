@@ -1,0 +1,38 @@
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 20vh;
+    margin: 50px auto 50px;
+    padding: 2rem 3rem 2rem;
+    background: #fff;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+
+    h3 {
+        text-align: center;
+        line-height: 20vh;
+        text-shadow: 0px 4px 20px rgba(0, 0, 0, 0.12);
+    }
+}
+
+.empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 20vh;
+    margin: 50px auto 50px;
+    padding: 2rem 3rem 2rem;
+    background-image: url('../../../images/alerts/space.jpg');
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+
+    h3 {
+        text-align: center;
+        line-height: 20vh;
+        text-shadow: 0px 4px 20px rgba(0, 0, 0, 0.12);
+        color: #fff;
+    }
+}
