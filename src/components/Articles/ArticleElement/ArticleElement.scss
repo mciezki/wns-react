@@ -1,10 +1,14 @@
 .article-preview-container {
-    width: 80%;
+    width: 90%;
     margin: 50px auto 50px;
     padding: 2rem 3rem 2rem;
     background: #fff;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.12);
     border-radius: 12px;
+
+    @media (max-width: 995px) {
+        margin: 10px auto 25px;
+    }
 
     .article-preview-header {
         margin-bottom: 20px;

@@ -16,11 +16,12 @@ a {
     margin-right: 1rem;
     cursor: pointer;
     transition: 0.5s;
+    text-decoration: none;
 
     &.basic-nav {
         &:hover {
-            color: #ccc;
             text-decoration: none;
+            color: #ccc;
 
             @media (max-width: 995px) {
                 color: #ccc;
@@ -30,7 +31,9 @@ a {
         }
 
         &.active {
+            @media (min-width: 996px) {
             border-bottom: 1px solid #00e;
+            }
         }
     }
 

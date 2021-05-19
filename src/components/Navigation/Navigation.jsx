@@ -85,7 +85,7 @@ const Navigation = () => {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
                         <NavLink className="basic-nav" exact to="/" onClick={() => scrollToTop()}>Home</NavLink>
-                        <NavLink className="basic-nav" exact to="/articles" onClick={() => scrollToTop()}>Articles</NavLink>
+                        <NavLink className="basic-nav" to="/articles" onClick={() => scrollToTop()}>Articles</NavLink>
                     </Nav>
                     {user ?
                         width > 992 ?

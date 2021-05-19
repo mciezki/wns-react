@@ -39,6 +39,11 @@ const ArticlesSubpage = ({ category }) => {
     }, [currentPage, category]);
 
 
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [category]);
+
+
     const changeCurrentPage = (page) => {
         setCurrentPage(page);
     }

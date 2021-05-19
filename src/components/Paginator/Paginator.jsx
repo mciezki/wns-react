@@ -8,6 +8,11 @@ const Paginator = ({ currentPage, pages, changeCurrentPage }) => {
     const changePagination = (e) => {
         const { id } = e.target;
 
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+
         switch (id) {
             case "first":
                 changeCurrentPage(1);
@@ -25,7 +30,7 @@ const Paginator = ({ currentPage, pages, changeCurrentPage }) => {
                 changeCurrentPage(Number(id));
                 break;
         };
-    }
+    };
 
     const items = [];
     if (pages > 2) {
