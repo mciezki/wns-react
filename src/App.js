@@ -7,7 +7,8 @@ import {
   RegisterPage,
   TestPage,
   AddArticlePage,
-  ArticlesPage
+  ArticlesPage,
+  ArticlePage
 } from './pages';
 import { routes, history, ScrollToTop } from './helpers';
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -29,7 +30,7 @@ const App = () => {
           <Route exact path={routes.test} component={TestPage} />
           {!user ? <Route exact path={routes.register} component={RegisterPage} /> : null}
           <Route path={routes.articles.self} component={ArticlesPage} />
-          <Route path={routes.article} component={TestPage} />
+          <Route path={routes.article} component={ArticlePage} />
           {user ? <Route exact path={routes.addArticle} component={AddArticlePage} /> : null}
           <Route component={NotFoundPage} />
         </Switch>

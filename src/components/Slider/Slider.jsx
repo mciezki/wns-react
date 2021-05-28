@@ -37,7 +37,7 @@ const Slider = () => {
     useEffect(() => {
         let counter = 1;
 
-        setInterval(() => {
+        const interval = setInterval(() => {
             setImg(sliderChanges[counter].img);
             setBigTxt(sliderChanges[counter].bigTxt);
             setSmallTxt(sliderChanges[counter].smallTxt);
@@ -49,7 +49,8 @@ const Slider = () => {
             }
         }, 15000);
 
-    }, [])
+        return () => clearInterval(interval);
+    }, []);
 
     return (
         <header>
